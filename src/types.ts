@@ -4,7 +4,7 @@ export interface IP {
   country: string;
   isp: string;
   lat: number;
-  long: number;
+  lon: number;
   org: string;
   query: string;
   region: string;

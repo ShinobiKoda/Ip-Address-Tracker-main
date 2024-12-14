@@ -1,89 +1,77 @@
 import { useState, useRef, useEffect } from "react";
 import { IP } from "./types";
 import { getIpData } from "./api/getIPData";
+import HeaderImage from "./components/HeaderImage";
+import GetMap from "./api/getMap";
 
 const ShowIPDetails = () => {
   const [data, setData] = useState<IP | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null); // Input reference
 
-  const getIPDetails = async () => {
-    const query = inputRef.current?.value.trim(); // Get input value
-
+  const getIPDetails = async (query?: string) => {
     setLoading(true);
-    setError(null);
     setData(null);
 
     try {
-      const response = await getIpData(query);
+      const response = await getIpData(query?.trim() || ""); // Default to current location if no query
       if (response) {
+        console.log(response);
         setData(response); // Set fetched data
-      } else {
-        setError("Failed to fetch data.");
       }
     } catch (err) {
       if (err instanceof Error) {
-        setError("Error fetching data: " + err.message);
+        console.log("Error fetching data");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  // Fetch current location details on page load
   useEffect(() => {
     getIPDetails();
   }, []);
 
-  const { city, country, query: ip, timezone, as, regionName } = data || {};
+  const handleSearch = () => {
+    const query = inputRef.current?.value; // Get input value
+    if (!query || !query.trim()) {
+      return;
+    }
+    getIPDetails(query); // Call API with input value
+  };
+
+  const { regionName, query: ip, timezone, isp, lat, lon } = data || {};
 
   return (
-    <div>
-      <div>
-        <input
-          type="text"
-          placeholder="Search IP or domain"
-          ref={inputRef}
-          style={{ padding: "8px", marginRight: "8px" }}
-        />
-        <button
-          onClick={getIPDetails}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: "blue",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Search
-        </button>
+    <div className="flex flex-col min-h-screen">
+      {/* Pass inputRef and handleSearch to HeaderImage */}
+      <HeaderImage inputRef={inputRef} handleSearch={handleSearch} />
+      <div className="w-full px-5 relative z-20 top-[-4rem] max-w-[1440px] mx-auto">
+        <div className="w-full bg-white rounded-xl py-6 flex flex-col gap-4 items-center text-center justify-center sm:grid sm:grid-cols-4">
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold">IP ADDRESS</h3>
+            <p>{loading ? "-----" : ip}</p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold">LOCATION</h3>
+            <p>{loading ? "-----" : regionName}</p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold">TIMEZONE</h3>
+            <p>{loading ? "-----" : timezone}</p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold">ISP</h3>
+            <p>{loading ? "-----" : isp}</p>
+          </div>
+        </div>
       </div>
 
-      {loading && <div>Loading....</div>}
-      {error && <div style={{ color: "red" }}>Error: {error}</div>}
-
-      {data && (
-        <div>
-          <h2>IP Details:</h2>
-          <p>
-            <strong>City:</strong> {city}
-          </p>
-          <p>
-            <strong>Country:</strong> {country}
-          </p>
-          <p>
-            <strong>IP:</strong> {ip}
-          </p>
-          <p>
-            <strong>Timezone:</strong> {timezone}
-          </p>
-          <p>
-            <strong>AS:</strong> {as}
-          </p>
-          <p>
-            <strong>Region:</strong> {regionName}
-          </p>
+      {/* Map Component */}
+      {lat && lon && (
+        <div className="w-full relative z-10 top-0">
+          <GetMap latitude={lat} longitude={lon} />
         </div>
       )}
     </div>

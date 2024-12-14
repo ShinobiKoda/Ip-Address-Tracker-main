@@ -1,3 +1,16 @@
+@import "leaflet/dist/leaflet.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header-img {
+  background-image: url(../public/pattern-bg-mobile.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@media screen and (min-width: 600px) {
+  .header-img {
+    background-image: url(../public/pattern-bg-desktop.png);
+  }
+}
