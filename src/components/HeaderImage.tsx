@@ -21,11 +21,11 @@ const HeaderImage: React.FC<HeaderImageProps> = ({
               type="text"
               placeholder="Search IP or domain..."
               ref={inputRef}
-              className="bg-transparent outline-none border-none px-2 w-full"
+              className="bg-transparent outline-none border-none px-2 w-full cursor-pointer"
             />
             <button
               onClick={handleSearch}
-              className="bg-black text-white px-5 py-4 rounded-tr-xl rounded-br-xl"
+              className="bg-black text-white px-5 py-4 rounded-tr-xl rounded-br-xl hover:opacity-90 cursor-pointer"
             >
               <FontAwesomeIcon icon={searchArrow} size="lg" />
             </button>

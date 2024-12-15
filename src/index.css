@@ -1,16 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
 @import "leaflet/dist/leaflet.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Rubik", sans-serif;
+}
+
 .header-img {
-  background-image: url(../public/pattern-bg-mobile.png);
+  background-image: url(../pattern-bg-mobile.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.map-container {
+  display: relative;
+  top: -20rem;
+}
+
+.desktop-details {
+  display: none;
+}
+
 @media screen and (min-width: 600px) {
+  .map-container {
+    top: -20rem;
+  }
+
   .header-img {
-    background-image: url(../public/pattern-bg-desktop.png);
+    background-image: url(../pattern-bg-desktop.png);
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .desktop-details {
+    display: flex;
+  }
+
+  .mobile-details {
+    display: none;
+  }
+
+  .map-container {
+    top: -13.7rem;
   }
 }
