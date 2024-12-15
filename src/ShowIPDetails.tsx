@@ -41,7 +41,15 @@ const ShowIPDetails = () => {
     getIPDetails(query); // Call API with input value
   };
 
-  const { regionName, query: ip, timezone, isp, lat, lon } = data || {};
+  const {
+    country_capital: regionName,
+    ip: ip,
+    timezone_gmt: timezone,
+    timezone_name,
+    isp,
+    latitude,
+    longitude,
+  } = data || {};
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -67,7 +75,9 @@ const ShowIPDetails = () => {
             <h3 className="font-bold text-[#c2c2c2] -tracking-[-0.2rem]">
               TIMEZONE
             </h3>
-            <p className="font-bold text-lg">{loading ? "-----" : timezone}</p>
+            <p className="font-bold text-lg">
+              {loading ? "-----" : `${timezone_name} ${timezone}`}
+            </p>
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="font-bold text-[#c2c2c2] -tracking-[-0.2rem]">
@@ -97,7 +107,9 @@ const ShowIPDetails = () => {
             <h3 className="font-bold text-[#c2c2c2] text-sm -tracking-[-0.2rem]">
               TIMEZONE
             </h3>
-            <p className="font-bold text-2xl">{loading ? "-----" : timezone}</p>
+            <p className="font-bold text-lg">
+              {loading ? "-----" : `${timezone_name} ${timezone}`}
+            </p>
           </div>
           <div className="self-stretch w-[2px] bg-black"></div>
           <div className="flex flex-col gap-1 flex-1">
@@ -110,9 +122,9 @@ const ShowIPDetails = () => {
       </div>
 
       {/* Map Component */}
-      {lat && lon && (
+      {latitude && longitude && (
         <div className="w-full relative z-10 map-container">
-          <GetMap latitude={lat} longitude={lon} />
+          <GetMap latitude={latitude} longitude={longitude} />
         </div>
       )}
     </div>
