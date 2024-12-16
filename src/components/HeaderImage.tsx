@@ -19,9 +19,9 @@ const HeaderImage: React.FC<HeaderImageProps> = ({
           <div className="rounded-xl bg-white flex items-center w-full justify-between">
             <input
               type="text"
-              placeholder="Search IP or domain..."
+              placeholder="Search IP or domain e.g(google.com)"
               ref={inputRef}
-              className="bg-transparent outline-none border-none px-2 w-full cursor-pointer"
+              className="bg-transparent outline-none border-none px-5 w-full cursor-pointer"
             />
             <button
               onClick={handleSearch}

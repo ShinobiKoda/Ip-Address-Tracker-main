@@ -27,4 +27,5 @@ export interface IP {
   timezone_gmt: string;
   timezone_name: string;
   zip: string;
+  success: boolean;
 }

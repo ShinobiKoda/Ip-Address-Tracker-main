@@ -1,5 +1,5 @@
 import "./index.css";
-import ShowIPDetails from "./ShowIPDetails";
+import ShowIPDetails from "./components/ShowIPDetails";
 
 const App = () => {
   return (

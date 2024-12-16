@@ -25,6 +25,16 @@
   display: none;
 }
 
+.error-desktop {
+  display: none;
+}
+
+@media screen and (min-width: 300px) {
+  .map-container {
+    top: -21.8rem;
+  }
+}
+
 @media screen and (min-width: 600px) {
   .map-container {
     top: -20rem;
@@ -44,7 +54,15 @@
     display: none;
   }
 
+  .error-mobile {
+    display: none;
+  }
+
+  .error-desktop {
+    display: block;
+  }
+
   .map-container {
-    top: -13.7rem;
+    top: -15.8rem;
   }
 }
